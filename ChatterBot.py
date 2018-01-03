@@ -1,6 +1,5 @@
 # Dependencies
 import tweepy
-import json
 import time
 
 # Twitter API Keys
@@ -10,31 +9,27 @@ access_token = "943258585311694848-aV9Dp1OsIRdGOoXGZKy0SPWiCZMpwd0"
 access_token_secret = "Yr81e3f9OanedDmSsskNW7yRQZOA2qgnwnPZiXgHhQH8V"
 
 
-# Setup Tweepy API Authentication
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+# Create quotes to tweet
+quote_list = ["Quote 1","Quote 2","Quote 3"]
+
+# Twitter credentials
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+    
+# Create function for tweeting
+def QuoteItUp():
+
+    i=0
+    # Tweet the next quote
+    api.update_status(quote_list[i])
+    # Print success message
+    print("%s Quote tweeted successfully"%(i+1))
+    i+=1
 
 
-# Create a function that tweets
-```# Create a function that tweets
-def TweetOut(tweet_number):
-    api.update_status(
-        "Can't stop. Won't stop. Chatting! This is Tweet #%s!" %
-        tweet_number)
-
-
-# Create a function that calls the TweetOut function every minute
-counter = 0
-
-# Infinitely loop
-while(True):
-
-    # Call the TweetQuotes function and specify the tweet number
-    TweetOut(counter)
-
-    # Once tweeted, wait 60 seconds before doing anything else
-    time.sleep(60)
-
-    # Add 1 to the counter prior to re-running the loop
-    counter = counter + 1
+# Set timer to run every minute
+counter=0
+while(counter<3):
+    QuoteItUp()
+    time.sleep(30)
